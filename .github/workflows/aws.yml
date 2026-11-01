@@ -1,22 +1,38 @@
-name: AWS Authentication
+name: AWS Authentication and S3 Upload
 
 on:
-  push:
+push:
 
 jobs:
-  aws-authentication:
-    runs-on: ubuntu-latest
+aws-authentication:
+runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+```
+steps:
+  # Step 1: Download repository code to Ubuntu runner
+  - name: Checkout Code
+    uses: actions/checkout@v4
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-south-1
+  # Step 2: Authenticate with AWS
+  - name: Configure AWS Credentials
+    uses: aws-actions/configure-aws-credentials@v4
+    with:
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws-region: us-east-1
 
-      - name: Verify AWS Identity
-        run: aws sts get-caller-identity
+  # Step 3: Verify AWS identity
+  - name: Verify AWS Identity
+    run: aws sts get-caller-identity
+
+  # Step 4: Upload file to S3
+  - name: Upload file to S3
+    run: |
+      aws s3 cp hello.txt s3://harini-github-actions/hello.txt
+
+  # Step 5: Verify uplo
+```
+ad to S3
+  - name: Verify Upload to S3
+    run: |
+      aws s3 ls s3://harini-github-actions/hello.txt
