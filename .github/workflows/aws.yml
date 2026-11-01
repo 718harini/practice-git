@@ -7,7 +7,6 @@ jobs:
 aws-authentication:
 runs-on: ubuntu-latest
 
-```
 steps:
   # Step 1: Download repository code to Ubuntu runner
   - name: Checkout Code
@@ -31,7 +30,6 @@ steps:
       aws s3 cp hello.txt s3://harini-github-actions/hello.txt
 
   # Step 5: Verify uplo
-```
 ad to S3
   - name: Verify Upload to S3
     run: |
